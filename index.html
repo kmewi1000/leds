@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf8">
+	<title>Control de Leds con Raspberry</title>
+	<style type="text/css">
+		body{
+			background-color: #678;
+		}
+		header{
+			margin:0 auto;
+			width:960px;
+		}
+		h1{
+			color:white;
+			font-family: helvetica,arial;
+			font-size:40px;
+			margin-top:50px;
+			text-align: center;
+			text-shadow:1px 1px 1px #111;
+		}
+		section{
+			text-align:center;
+		}
+		.bloque_led{
+			background-color: #F1F1F1;
+			border:solid 3px #333;
+			border-radius:20px;
+			display:inline-block;
+			margin:40px;
+		    -webkit-flex: 1; /* Safari 6.1+ */
+		    -ms-flex: 1; /* IE 10 */
+		    flex: 1;
+		    padding:20px;
+		    text-align: center;
+		    box-shadow: 2px 2px 4px #b3b0b0;
+		}
+		
+		.bloque_led p{
+			font-family: helvetica,arial;
+			font-size: 20px;
+			text-align: center;
+			text-shadow:1px 1px 1px #bbb;
+		}
+
+		#led1{
+			background-color: red;
+			border:solid 2px #D23030;
+			border-radius: 40px;
+			height:60px;
+			margin:20px auto;
+			width:60px;
+		}
+
+		#led2{
+			background-color: red;
+			border:solid 2px #D23030;
+			border-radius: 40px;
+			height:60px;
+			margin:20px auto;
+			width:60px;
+		}
+
+		#led3{
+			background-color: red;
+			border:solid 2px #D23030;
+			border-radius: 40px;
+			height:60px;
+			margin:20px auto;
+			width:60px;
+		}
+
+		#led4{
+			background-color: red;
+			border:solid 2px #D23030;
+			border-radius: 40px;
+			height:60px;
+			margin:20px auto;
+			width:60px;
+		}
+
+		.bloque_led input[type=button]{
+			height:60px;
+			width: 120px;
+			font-family: helvetica,arial;
+			font-size: 20px;
+			text-shadow:1px 1px 1px #bbb;
+		}
+
+	</style>
+	
+</head>
+<body>
+	<header>
+		<h1>CONTROL DE ENCENDIDO Y APAGADO DE DIODOS LED CON RASPBERRY PI Y NODE.JS</h1>
+	</header>
+	<section>
+					<!--		LED 1		-->
+		<div class="bloque_led">
+			<p>Led 1</p>
+			<div id="led1">&nbsp;</div>
+			<div><input type="button" id="button1" value="Encender" onClick="cambia(1);"/></div>
+		</div>
+					<!--		LED 1		-->
+		<div class="bloque_led">
+			<p>Led 2</p>
+			<div id="led2">&nbsp;</div>
+			<div><input type="button" id="button2" value="Encender" onClick="cambia(2);"/></div>
+		</div>
+					<!--		LED 1		-->
+		<div class="bloque_led">
+			<p>Led 3</p>
+			<div id="led3">&nbsp;</div>
+			<div><input type="button" id="button3" value="Encender" onClick="cambia(3);"/></div>
+		</div>
+					<!--		LED 1		-->
+		<div class="bloque_led">
+			<p>Led 4</p>
+			<div id="led4">&nbsp;</div>
+			<div><input type="button" id="button4" value="Encender" onClick="cambia(4);"/></div>
+		</div>
+	</section>
+	<footer>&nbsp;</footer>
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+		});
+
+		function cambia(led){
+			
+			var socket = io();
+
+			if($("#button"+led).val()=="Encender"){
+				$("#led"+led).css("background-color","#03FC00");
+				$("#led"+led).css("border","2px solid #56d03c");
+				$("#led"+led).css("box-shadow","3px 3px 6px #56d03c");
+				$("#button"+led).val("Apagar");
+				socket.emit('operacion', led,1);
+			}else{
+				$("#led"+led).css("background-color","red");
+				$("#led"+led).css("border","2px solid #D23030");
+				$("#led"+led).css("box-shadow","none");
+				$("#button"+led).val("Encender");
+				socket.emit('operacion', led,0);
+			}
+		}
+	</script>
+</body>
+</html>
